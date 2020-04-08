@@ -17,7 +17,7 @@ import javax.sound.midi.Track;
 
 public class testChannel {
 	public static void main(String...strings) throws IOException, MidiUnavailableException, InvalidMidiDataException {
-		FileInputStream FIS = new FileInputStream(new File(""));
+		FileInputStream FIS = new FileInputStream(new File("test1.txt"));
 		Channel c = new Channel(0);
 		c = c.fromStringRep(new String(FIS.readAllBytes()));
 		Sequencer player = MidiSystem.getSequencer();
@@ -26,10 +26,7 @@ public class testChannel {
 		//on fait le f* prelude de Bach
 		Track tra = seq.createTrack();
 		c.addToTrack(tra);
-		System.out.println("setSequence");
 		player.setSequence(seq);
-		System.out.println("start");
 		player.start();
-		System.out.println("test");
 	}
 }

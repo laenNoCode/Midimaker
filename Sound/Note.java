@@ -90,7 +90,6 @@ public class Note implements SerializableTrackEvent{
 	@Override
 	public Note fromStringRep(String rep) {
 		// TODO Auto-generated method stub
-		System.out.println(rep);
 		return new Note(rep);
 	}
 	@Override

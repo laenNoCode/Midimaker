@@ -12,7 +12,7 @@ import Utils.TrackEvent;
 public class Channel implements StringRep {
 	Vector<SerializableTrackEvent> Events;
 	int channelNumber;
-	Channel(int c){
+	public Channel(int c){
 		this.channelNumber = c;
 		this.Events = new Vector<SerializableTrackEvent>();
 	}
@@ -20,8 +20,9 @@ public class Channel implements StringRep {
 	public String toStringRep() {
 		String toRet = "C:" + channelNumber+";\r\n";
 		for (SerializableTrackEvent te:Events) {
-			toRet = "" + te.getTrackID() + ":" + te.toStringRep() + ";\n\r";
+			toRet += "" + te.getTrackID() + ":" + te.toStringRep() + ";\r\n";
 		}
+		toRet = toRet.substring(0, toRet.length() - 3);
 		return toRet;
 	}
 
@@ -32,12 +33,13 @@ public class Channel implements StringRep {
 		Note n = new Note();
 		InstrumentShift is = new InstrumentShift(0, 0);
 		for (String line : rep.split(";\r\n")) {
-			System.out.println(line);
 			if (line.startsWith("C:")) {
 				chan.channelNumber = Integer.parseInt(line.split("C:")[1].split(";")[0]);
-			}else if (line.startsWith("N:")) {
+			}
+			if (line.startsWith("N:")) {
 				chan.Events.add(n.fromStringRep(line.split("N:")[1]));
-			}else if (line.startsWith("I:")) {
+			}
+			if (line.startsWith("I:")) {
 				chan.Events.add(is.fromStringRep(line.split("I:")[1]));
 			}
 		}
@@ -48,6 +50,12 @@ public class Channel implements StringRep {
 		{
 			te.addToTrack(t, this.channelNumber);
 		}
+	}
+	public Vector<SerializableTrackEvent> getEvents() {
+		return Events;
+	}
+	public int getChannelNumber() {
+		return channelNumber;
 	}
 }
 
